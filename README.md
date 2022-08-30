@@ -1,8 +1,8 @@
 # crud-nodejs
 
-## STEP
+## STEPS
 
-- Create database 
+1. Create database and columns 
 ```
 create table data_transaction (
 trans_id int(10) not null auto_increment,
@@ -30,8 +30,6 @@ active int not null,
 PRIMARY KEY (user_id)
 );
 
-
-
 -- insert data user
 INSERT INTO data_user VALUES ('A01', "user A01", 1);
 INSERT INTO data_user VALUES ('A02', "user A02", 1);
@@ -48,4 +46,55 @@ INSERT INTO data_product VALUES (4,"Asuransi AcciCare", 35000);
 
 -- insert data_transaction
 INSERT INTO data_transaction VALUES (0,"2021-11-11", 'A01', 1, 1, 50000);
+```
+
+2. IMPORT 
+```
+npm i express
+npm i mysql
+npm i body-parser
+```
+
+3. RUN SERVER 
+```
+node index.js
+```
+
+4. Test Postman
+```
+GET User
+localhost:3000/user
+
+GET OneUser
+localhost:3000/user/A02
+
+CREATE User
+localhost:3000/user
+
+DELETE User
+localhost:3000/user/B01
+
+GET Product
+localhost:3000/product
+
+GET OneProduct
+localhost:3000/product/1
+
+CREATE Product
+localhost:3000/product
+
+DELETE Product
+localhost:3000/product/2
+
+GET Transaction
+localhost:3000/transaction
+
+GET OneTransaction
+localhost:3000/transaction/1
+
+CREATE Transaction
+localhost:3000/transaction
+
+DELETE Transaction
+localhost:3000/transaction/2
 ```
