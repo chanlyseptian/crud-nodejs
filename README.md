@@ -2,99 +2,93 @@
 
 ## STEPS
 
-1. Create database and columns 
+1. Install packages and dependencies
+
 ```
-create table data_transaction (
-trans_id int(10) not null auto_increment,
-trans_date date,
-user_id varchar(25) not null,
-product_id int not null,
-qty_order int not null,
-total_order decimal(10,2) not null,
-PRIMARY KEY (trans_id),
-FOREIGN KEY (product_id) REFERENCES data_product(product_id),
-FOREIGN KEY (user_id) REFERENCES data_user(user_id)
-)
+npm install
+npm install express mysql2 sequelize bcrypt jsonwebtoken dotenv cors nodemon
+npm install --save-dev sequelize-cli
 
-create table data_product (
-product_id int not null auto_increment,
-product_name varchar(60) not null,
-premium decimal(10,2) not null,
-PRIMARY KEY (product_id)
-);
-
-create table data_user (
-user_id varchar(25) not null,
-user_name varchar(80) not null,
-active int not null,
-PRIMARY KEY (user_id)
-);
-
--- insert data user
-INSERT INTO data_user VALUES ('A01', "user A01", 1);
-INSERT INTO data_user VALUES ('A02', "user A02", 1);
-INSERT INTO data_user VALUES ('B01', "user B01", 0);
-INSERT INTO data_user VALUES ('B02', "user B02", 1);
-INSERT INTO data_user VALUES ('C01', "user C01", 0);
-INSERT INTO data_user VALUES ('C02', "user C02", 1);
-
--- insert product
-INSERT INTO data_product VALUES (0,"Asuransi Mikro KKM", 50000);
-INSERT INTO data_product VALUES (2,"Asuransi Pijar", 200000);
-INSERT INTO data_product VALUES (3,"Asuransi Life Car", 75000);
-INSERT INTO data_product VALUES (4,"Asuransi AcciCare", 35000);
-
--- insert data_transaction
-INSERT INTO data_transaction VALUES (0,"2021-11-11", 'A01', 1, 1, 50000);
 ```
 
-2. IMPORT 
+2. Create database using sequelize (\*note: must change config.json setting)
+
 ```
-npm i express
-npm i mysql
-npm i body-parser
+npx sequelize-cli init
+
+npx sequelize-cli model:generate --name User --attributes username:string,password:string,active:integer
+
+npx sequelize-cli model:generate --name Product --attributes productName:string,premium:float
+
+npx sequelize-cli model:generate --name Transaction --attributes transactionDate:date,UserId:integer,ProductId:integer,qtyOrder:integer,totalOrder:float
+
+npm run db-install
 ```
 
-3. RUN SERVER 
+3. RUN SERVER
+
 ```
-node index.js
+npm start
 ```
 
 4. Test Postman
+
+### User
+
 ```
-GET User
-localhost:3000/user
+GET AllUsers:
+localhost:3000/api/users
 
 GET OneUser
-localhost:3000/user/A02
+localhost:3000/api/users/detail
 
-CREATE User
-localhost:3000/user
+POST CreateUser
+localhost:3000/api/users/register
+
+POST Login
+localhost:3000/api/users/login
 
 DELETE User
-localhost:3000/user/B01
+localhost:3000/api/users/:id
 
-GET Product
-localhost:3000/product
+PUT UpdateUser
+localhost:3000/api/users
+```
+
+### Product
+
+```
+GET AllProducts:
+localhost:3000/api/products
 
 GET OneProduct
-localhost:3000/product/1
+localhost:3000/api/products/:id
 
-CREATE Product
-localhost:3000/product
+POST CreateProduct
+localhost:3000/api/products
 
 DELETE Product
-localhost:3000/product/2
+localhost:3000/api/products/:id
 
-GET Transaction
-localhost:3000/transaction
+PUT UpdateProduct
+localhost:3000/api/products/:id
+```
+
+### Transaction
+
+```
+GET AllTransactions:
+localhost:3000/api/transactions
 
 GET OneTransaction
-localhost:3000/transaction/1
+localhost:3000/api/transactions
 
-CREATE Transaction
-localhost:3000/transaction
+POST Order
+localhost:3000/api/transactions
 
 DELETE Transaction
-localhost:3000/transaction/2
+localhost:3000/api/transactions/:id
+
+PUT UpdateTransaction
+localhost:3000/api/transactions/:id
 ```
