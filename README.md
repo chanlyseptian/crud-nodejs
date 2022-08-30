@@ -11,7 +11,7 @@ npm install --save-dev sequelize-cli
 
 ```
 
-2. Create database using sequelize (\*note: must change config.json setting)
+2. Create database using sequelize (\*note: must change config.json setting, config.json > development > change username and password only with yours)
 
 ```
 npx sequelize-cli init
